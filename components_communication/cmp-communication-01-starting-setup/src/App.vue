@@ -4,7 +4,14 @@
       <h1>My Friends</h1>
     </header>
     <ul v-for="(friend,index) in friends" :key="index">
-      <friend-contact :name="friend.name" :phone-number="friend.phone" :email="friend.email"></friend-contact>
+      <friend-contact 
+        :id = "friend.id"
+        :name="friend.name"
+        :phone-number="friend.phone"
+        :email="friend.email"
+        :favorite="friend.favorite"
+        @toggle-favorite="toggleFavorite"
+      ></friend-contact>
     </ul>
   </section>
 </template>
@@ -19,21 +26,33 @@ export default {
           name: "Federico Walovnik",
           phone: "0123 45678 90",
           email: "federico@localhost.com",
+          favorite: true,
         },
         {
           id: "julie",
           name: "Julie Jones",
           phone: "0987 654421 21",
           email: "julie@localhost.com",
+          favorite: false,
         },
-        { id: "Ruben", 
+        { 
+          id: "Ruben", 
           name: "Ruben Peres", 
           phone: "0987 654421 21", 
-          email: "ruben@localhost.com", 
+          email: "ruben@localhost.com",
+          favorite: false,
         },
       ],
     };
   },
+  methods: {
+    toggleFavorite(friendId){
+      const selectedContact = this.friends.find(
+        friend => friend.id === friendId
+      );
+      selectedContact.favorite = !selectedContact.favorite;
+    }
+  }
 };
 </script>
 
